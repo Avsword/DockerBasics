@@ -1,0 +1,29 @@
+devopsdockeruh/simple-web-service   ubuntu    4e3362e907d5   24 months ago   83MB
+devopsdockeruh/simple-web-service   alpine    fd312adc88e0   24 months ago   15.7MB
+
+Alpine is noticeably smaller.
+
+
+start the image // container
+$ docker run -it -d --rm devopsdockeruh/simple-web-service:alpine
+ea83831b7717d03125506d40b21544d5f3071920b32db992d8c216dde7f82a05
+
+// The image was called crazy_carson
+Aaro@DESKTOP-5HKV13J MINGW64 ~/Desktop/GitHub/DockerBasics/Part1 (main)
+$ docker exec -it crazy_carson sh
+/usr/src/app # tail -f ./text.log
+2023-03-05 15:52:38 +0000 UTC
+2023-03-05 15:52:40 +0000 UTC
+2023-03-05 15:52:42 +0000 UTC
+2023-03-05 15:52:44 +0000 UTC
+2023-03-05 15:52:46 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-03-05 15:52:48 +0000 UTC
+2023-03-05 15:52:50 +0000 UTC
+2023-03-05 15:52:52 +0000 UTC
+2023-03-05 15:52:54 +0000 UTC
+2023-03-05 15:52:56 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-03-05 15:52:58 +0000 UTC
+2023-03-05 15:53:00 +0000 UTC
+2023-03-05 15:53:02 +0000 UTC

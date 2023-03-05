@@ -1,0 +1,20 @@
+CONTAINER ID   IMAGE                    COMMAND                  CREATED              STATUS    
+                 PORTS     NAMES
+d921de3a6eb4   nginx                    "/docker-entrypoint.…"   43 seconds ago       Up 43 seconds        nds              80/tcp    brave_shaw
+aaaf85cbf8da   nginx                    "/docker-entrypoint.…"   56 seconds ago       Up 55 seconds        nds              80/tcp    amazing_kapitsa
+6ceab8bc8b28   nginx                    "/docker-entrypoint.…"   About a minute ago   Up About a minute     minute          80/tcp    agitated_galileo
+c0bd9b1acc3f   nginx                    "/docker-entrypoint.…"   3 minutes ago        Exited (0) 3 minutes  3 minutes ago             stupefied_mirzakhani
+06ae5f833af5   nginx                    "/docker-entrypoint.…"   4 minutes ago        Exited (0) 2 minutes  2 minutes ago             infallible_ptolemy
+a1278f32a84b   docker/getting-started   "/docker-entrypoint.…"   10 minutes ago       Exited (0) 2 minutes  2 minutes ago             mystifying_volhard
+
+Stop them:
+$ docker ps -a
+CONTAINER ID   IMAGE                    COMMAND                  CREATED              STATUS    
+                  PORTS     NAMES
+d921de3a6eb4   nginx                    "/docker-entrypoint.…"   About a minute ago   Exited (0) 11 seconds ago             brave_shaw
+aaaf85cbf8da   nginx                    "/docker-entrypoint.…"   About a minute ago   Exited (0) 18 seconds ago             amazing_kapitsa
+6ceab8bc8b28   nginx                    "/docker-entrypoint.…"   2 minutes ago        Up 2 minutes                80/tcp    agitated_galileo
+c0bd9b1acc3f   nginx                    "/docker-entrypoint.…"   4 minutes ago        Exited (0) 3 minutes ago              stupefied_mirzakhani
+06ae5f833af5   nginx                    "/docker-entrypoint.…"   5 minutes ago        Exited (0) 3 minutes ago              infallible_ptolemy
+a1278f32a84b   docker/getting-started   "/docker-entrypoint.…"   11 minutes ago       Exited (0) 3 minutes ago              mystifying_volhard
+

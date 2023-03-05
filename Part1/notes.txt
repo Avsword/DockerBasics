@@ -1,0 +1,5 @@
+-d = detatched. Runs it in the background -> won't "clog" terminal?
+-rm = stops the container when you stop it. -> Makes sure no useless containers are left behind.
+-it = Runs container in interactive tty mode. So I can interact with the container from the cmdl. 
+
+When using exec, you have to use the xbox gamertag looking ahh names.

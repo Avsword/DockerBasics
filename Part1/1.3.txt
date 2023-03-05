@@ -1,0 +1,21 @@
+I had some difficulties getting the... cmdl to work when it was outputting, but!
+$ docker run -it -d devopsdockeruh/simple-web-service:ubuntu
+
+$ docker exec -it dazzling_solomon bash
+root@4d4f2e4ed031:/usr/src/app# tail -f ./text.log
+2023-03-05 15:35:55 +0000 UTC
+2023-03-05 15:35:57 +0000 UTC
+2023-03-05 15:35:59 +0000 UTC
+2023-03-05 15:36:01 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-03-05 15:36:03 +0000 UTC
+2023-03-05 15:36:05 +0000 UTC
+2023-03-05 15:36:07 +0000 UTC
+2023-03-05 15:36:09 +0000 UTC
+2023-03-05 15:36:11 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-03-05 15:36:13 +0000 UTC
+2023-03-05 15:36:15 +0000 UTC
+2023-03-05 15:36:17 +0000 UTC
+
+I did find the answer.
