@@ -1,0 +1,8 @@
+
+docker run -p 8080:8080 web-server
+
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2023/03/05 - 19:26:43 | 200 |      95.831µs |      172.17.0.1 
+| GET      "/"
+[GIN] 2023/03/05 - 19:26:43 | 200 |        31.7µs |      172.17.0.1 
+| GET      "/favicon.ico"

@@ -1,0 +1,2 @@
+Dockerhub link: https://hub.docker.com/repository/docker/avsword/taskmanager/general
+Git Repo Link: https://github.com/Avsword/TaskManager 

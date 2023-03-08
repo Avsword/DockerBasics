@@ -1,0 +1,5 @@
+ISTG THIS IS IMPOSSIBLE.
+oh wait nvm it works.. ok cool cool, I had to do so much fiddling I hate it.
+
+docker build . -t spring
+docker run -p 8080:8080 spring 

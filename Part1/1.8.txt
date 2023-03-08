@@ -1,0 +1,5 @@
+# Start at SWS alpine
+FROM devopsdockeruh/simple-web-service:alpine
+
+# input hello at cmdl
+CMD [ "server" ]
