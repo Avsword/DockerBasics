@@ -1,0 +1,43 @@
+Running commands:
+docker run -v C:/Users/Aaro/Desktop/GitHub/DockerBasics/Part2/material-applications/simple-web-service/logs:/usr/src/app/logs webservice2  
+docker run -v $(pwd):/usr/src/app webservice2
+
+Compose:
+version: '2.15.1'
+
+services:
+  webservice2:
+    image: webservice2
+    build: .
+    volumes:
+      - .:/usr/src/app/
+      - logs:/usr/src/app/
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: '3'
+    container_name: composeWebService
+
+volumes:
+  logs:
+
+Dockerfile:
+# Build stage
+FROM golang:1.16 AS build
+#
+EXPOSE 8080
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build 
+# -o server
+
+# Final stage
+FROM alpine:3.14
+
+COPY --from=build /usr/src/app/simple-web-service /usr/src/app/server
+WORKDIR /usr/src/app/
+
+ENTRYPOINT [ "/usr/src/app/server" ]

@@ -12,5 +12,3 @@ COPY script.sh /app/script.sh
 
 # Entrypoint is the script.
 ENTRYPOINT [ "./app/script.sh" ]
-
-

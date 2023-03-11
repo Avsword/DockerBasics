@@ -1,0 +1,32 @@
+Frontend: 
+
+version: '2.15.1'
+
+services:
+  frontend2:
+    image: frontend2
+    build: .
+    ports:
+      - '5000:5000'
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080/
+    command: sh -c 'serve -s -l 5000 build'
+    container_name: composeFrontEnd
+
+
+Backend:
+
+version: '2.15.*'
+
+services:
+  backend:
+    image: backend2
+    build: .
+    ports:
+      - '8080:8080'
+    expose:
+      - 8080
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+      - PORT=8080
+    command: ./server

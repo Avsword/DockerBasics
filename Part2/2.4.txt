@@ -1,0 +1,22 @@
+version: '2.15.*'
+
+services:
+  backend:
+    image: backend2
+    build: .
+    ports:
+      - '8080:8080'
+    expose:
+      - 8080
+    depends_on:
+      - redis
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+      - PORT=8080
+      - REDIS_HOST=redis
+    command: ./server
+    restart: unless-stopped
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'

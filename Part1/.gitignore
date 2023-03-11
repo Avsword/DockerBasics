@@ -4,6 +4,6 @@ docker-compose.override.yml
 nginx.conf
 
 mydir/
-material-applications/*
+material-applications/
 logs/
 TaskManager/

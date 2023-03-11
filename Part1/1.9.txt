@@ -1,0 +1,6 @@
+I tried SO HARD to get the $pwd to work, but... sure.
+docker run -v "C:\Users\Aaro\Desktop\GitHub\DockerBasics\Part1\mydir:/mydir" youtube-dl https://imgur.com/JY5tHqr
+this works for the youtube dl so.. I'll use this I guess.
+
+docker run -v C:/Users/Aaro/Desktop/GitHub/DockerBasics/Part1/logs:/usr/src/app/logs devopsdockeruh/simple-web-service
+
