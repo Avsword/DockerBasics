@@ -1,0 +1,45 @@
+version: '2.15.*'
+
+services:
+  backend:
+    image: backend2
+    build: .
+    ports:
+      - '8080:8080'
+    expose:
+      - 8080
+    # We want redis and postgres to start before we try to boot up our backend.
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+      - PORT=8080
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DATABASE=postgres
+    command: ./server
+    restart: unless-stopped
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+  postgres:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    container_name: db_postgresql
+    # I had to explicitly tell the ports. Otherwise it didnt wanna work.
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=example
+    # After I down + up and then refreshed the frontend, I was able to get the
+    #     messages I put in the backend. I also now see the entire postgres db in my
+    #       database folder.
+    volumes:
+      - ./database:/var/lib/postgresql/data
+
+volumes:
+  database:

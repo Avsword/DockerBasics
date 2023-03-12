@@ -1,0 +1,132 @@
+I just had to add this to the nginx.conf:
+
+location /ping/ {
+      proxy_set_header Host $host;
+      proxy_pass http://backend:8080/ping/;
+    }
+
+and change the backend env variable of REQUEST_ORIGIN to http://localhost
+
+and then all worked yay.
+
+
+Docker compose:
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: back.Dockerfile
+    ports:
+      - '8080:8080'
+    expose:
+      - 8080
+    depends_on:
+      - redis
+      - postgres
+    # Change the request origin. easy.
+    environment:
+      - REQUEST_ORIGIN=http://localhost
+      - PORT=8080
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DATABASE=postgres
+    container_name: composeBackEnd
+    command: ./server
+    restart: unless-stopped
+    networks:
+      - fullstack
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    networks:
+      - fullstack
+
+  postgres:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    container_name: db_postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=example
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - fullstack
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - fullstack
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+
+  # I decided to just start the frontend here aswell. Makes my life a lot easier.
+  frontend:
+    image: frontend
+    ports:
+      - '5000:5000'
+    environment:
+      - REACT_APP_BACKEND_URL=http://127.0.0.1:8080
+    command: sh -c 'serve -s -l 5000 build'
+    container_name: composeFrontEnd
+    depends_on:
+      - backend
+    networks:
+      - fullstack
+
+volumes:
+  database:
+
+networks:
+  fullstack:
+
+
+docker front:
+FROM node:16-alpine
+
+EXPOSE 5000
+ENV REACT_APP_BACKEND_URL=http://localhost:8080/
+
+COPY ./front .
+
+RUN npm install -g serve
+
+RUN npm install && npm run build
+
+CMD ["npm", "start"]
+
+docker back:
+
+#FROM alpinelinux/golang
+FROM alpine:3.17
+
+EXPOSE 8080
+ENV PORT=8080
+ENV REQUEST_ORIGIN=http://localhost:5000
+ENV REDIS_HOST=redis
+
+COPY . .
+
+# Delete the front since I was lazy and just slapped it in the same folder.
+RUN rm -r front
+
+RUN apk update
+RUN apk add --update --no-cache go vim git make musl-dev curl
+RUN go build
+
+RUN go test ./..
+
+

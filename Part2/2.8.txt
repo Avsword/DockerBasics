@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: back.Dockerfile
+    ports:
+      - '8080:8080'
+    expose:
+      - 8080
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - REQUEST_ORIGIN=http://127.0.0.1:5000
+      - PORT=8080
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DATABASE=postgres
+    container_name: composeBackEnd
+    command: ./server
+    restart: unless-stopped
+    networks:
+      - fullstack
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    networks:
+      - fullstack
+
+  postgres:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    container_name: db_postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=example
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - fullstack
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - fullstack
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+
+  # I decided to just start the frontend here aswell. Makes my life a lot easier.
+  frontend:
+    image: frontend
+    ports:
+      - '5000:5000'
+    environment:
+      - REACT_APP_BACKEND_URL=http://127.0.0.1:8080
+    command: sh -c 'serve -s -l 5000 build'
+    container_name: composeFrontEnd
+    depends_on:
+      - backend
+    networks:
+      - fullstack
+
+volumes:
+  database:
+
+networks:
+  fullstack:
+# NGINX CONF.
+# events { worker_connections 1024; }
+
+# http {
+#   server {
+#     listen 80;
+
+#     location / {
+#       proxy_pass http://frontend:5000/;
+#     }
+
+#     location /api/ {
+#       proxy_set_header Host $host;
+#       proxy_pass http://backend:8080/;
+#     }
+#   }
+# }
