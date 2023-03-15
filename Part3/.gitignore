@@ -1,0 +1,6 @@
+DockerWorkflows/
+Dockerfile
+TaskManager/
+example-backend/
+express_app/
+front/

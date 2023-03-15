@@ -1,0 +1,59 @@
+FRONTEND:
+    # 16 is the LTS version so it'd be pog
+    FROM node:19-alpine
+
+    # haha im using alpine here
+
+    RUN adduser -D usr 
+    USER usr
+    WORKDIR /home/usr
+
+    EXPOSE 5000
+    ENV REACT_APP_BACKEND_URL=http://localhost:8080/
+
+    COPY ./front .
+
+    RUN npm install -g serve
+
+    RUN npm install && npm run build
+
+    CMD ["npm", "start"]
+    # Then run the build and 
+    # docker run -it -p 5000:5000 <name> sh
+    # serve -s -l 5000 build
+
+BACKEND:
+    #FROM alpinelinux/golang
+    FROM alpine:3.17
+
+    RUN adduser -D usr 
+
+
+
+    EXPOSE 8080
+    ENV PORT=8080
+    ENV REQUEST_ORIGIN=http://localhost:5000
+    ENV REDIS_HOST=redis
+
+    COPY . .
+    # Delete the front.
+    RUN rm -r front
+
+    RUN apk add --no-cache sudo
+    RUN apk update
+    RUN apk add --update --no-cache go vim git make musl-dev curl
+    RUN go build
+
+    RUN go test ./..
+    #10 0.485 rm: can't remove 'front/.dockerignore': Permission denied    
+    #10 0.485 rm: can't remove 'front/package-lock.json': Permission denied#10 0.485 rm: can't remove 'front/src/index.js': Permission denied     
+    #10 0.485 rm: can't remove 'front/src/App.js': Permission denied       
+    #10 0.485 rm: can't remove 'front/src/components/NavBar.js': Permission denied
+    # RUN chown -R usr .
+    # RUN chmod -R u+rwX /home/usr
+    #> [ 8/11] RUN apk update:
+    #12 0.571 ERROR: Unable to lock database: Permission denied
+    #12 0.571 ERROR: Failed to open apk database: Permission denied 
+    # oh ok just.. yea. just add the user at the end.
+    # https://gist.github.com/avishayp/33fcee06ee440524d21600e2e817b6b7 
+    USER usr

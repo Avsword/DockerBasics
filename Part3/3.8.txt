@@ -1,0 +1,22 @@
+FROM node:16-alpine  as build
+
+EXPOSE 5000
+ENV REACT_APP_BACKEND_URL=http://localhost:8080/
+
+COPY ./front/ .
+WORKDIR /usr/app/
+RUN apk update && apk add --no-cache git && \
+    npm install && npm install -g serve && npm run build && \
+    rm -rf /var/cache/apk/* /root/.npm /root/.node-gyp 
+# We now remove extra filler.
+
+
+#WORKDIR /home/usr
+
+FROM alpine:3.14
+COPY --from=build /usr/app/ /usr/app/
+RUN adduser -D usr
+USER usr
+
+WAS: 463MB
+NOW: 64MB

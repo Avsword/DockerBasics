@@ -1,0 +1,21 @@
+Log:
+Aaro@DESKTOP-5HKV13J MINGW64 ~/Desktop/GitHub/DockerBasics/part2 (main)
+$ docker run -it --rm --network host networkstatic/nmap localhost
+Starting Nmap 7.92 ( https://nmap.org ) at 2023-03-12 18:14 UTC
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.0000030s latency).
+Other addresses for localhost (not scanned): ::1
+Not shown: 997 closed tcp ports (reset)
+PORT     STATE    SERVICE
+80/tcp   filtered http
+111/tcp  open     rpcbind
+5432/tcp filtered postgresql
+
+Nmap done: 1 IP address (1 host up) scanned in 1.47 seconds
+
+I let the postgresql open on purpose. (I am tired)
+
+What did I do?
+
+    In the compose, I just removed the port configurations. only the nginx needs to be 
+        exposed to the host, everything else can run within the containers.

@@ -1,0 +1,37 @@
+Image before: 810MB
+JESUS
+NOW IT'S 64MB
+GODDAMN
+
+REPOSITORY   TAG           IMAGE ID       CREATED          SIZE  
+backend      latest        36b79eb67f00   55 seconds ago   65.5MB
+<none>       <none>        5ca0935ae93d   44 minutes ago   773MB 
+<none>       <none>        cc707e516b7c   50 minutes ago   810MB
+
+the two latest ones 773 and 810 are the previous backends
+That still wasn't enough, though. 
+$ docker images
+REPOSITORY        TAG           IMAGE ID       CREATED          SIZE
+backend_scratch   latest        069a73459465   31 minutes ago   18.6MB
+
+BUT THIS IS!! I FINALLY GOT IT!
+
+FROM golang:alpine as build
+EXPOSE 8080
+ENV PORT=8080
+ENV REQUEST_ORIGIN=http://localhost:5000
+WORKDIR /app
+COPY . .
+COPY go.mod go.sum ./
+RUN go mod download && \
+go get -d -v && \
+go build 
+#&& \go clean -cache -testcache -modcache -i -r
+
+
+FROM scratch
+COPY --from=build /app/server /
+EXPOSE 8080
+ENV PORT=8080
+ENV REQUEST_ORIGIN=http://localhost:5000
+CMD [ "./server" ]

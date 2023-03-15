@@ -1,0 +1,10 @@
+https://github.com/Avsword/DockerWorkflows/blob/main/.github/workflows/main.yml
+
+I decided to just use the old version.
+ONE THING!
+Now it is time to improve your solution by setting up a deployment
+ pipeline for it so that every push to GitHub results in a
+ new deployment to the cloud service.
+this does complete the exercise. trust me, I tried looking for git actions
+
+SEE 3.2.PNG.

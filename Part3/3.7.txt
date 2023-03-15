@@ -1,0 +1,26 @@
+Frontend before doing some magic: 463MB
+Frontend now: 320MB.
+What did I do?
+Switch to alpine
+remove extra stuff from build.
+
+FROM node:16-alpine  as build
+
+EXPOSE 5000
+ENV REACT_APP_BACKEND_URL=http://localhost:8080/
+
+COPY ./front/ .
+
+RUN apk update && apk add --no-cache git && \
+    npm install && npm install -g serve && npm run build && \
+    rm -rf /var/cache/apk/* /root/.npm /root/.node-gyp 
+# We now remove extra filler.
+
+
+#WORKDIR /home/usr
+
+FROM alpine:3.14
+COPY --from=build . .
+RUN adduser -D usr
+USER usr
+CMD ["npm", "start"]

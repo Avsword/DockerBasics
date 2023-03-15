@@ -1,0 +1,9 @@
+backend:
+    REPOSITORY   TAG           IMAGE ID       CREATED          SIZE 
+    backend      latest        5ca0935ae93d   25 seconds ago   773MB
+    <none>       <none>        cc707e516b7c   7 minutes ago    810MB
+Keep in mind that my backend image... for some reason (I forgot but it's 5am) has the frontend files in it.
+but still that's good progress! It do be down.
+
+The frontend had only 2 run commands and not a lot that I could remove so I didn't record
+    any NOTABLE changes.

@@ -1,0 +1,8 @@
+I had to start this in administrator cmd (I'm on windows)
+
+this was the command:
+docker run 
+-e DOCKER_USERNAME=avsword 
+-e DOCKER_PASSWORD={My very secret password} 
+-v /var/run/docker.sock:/var/run/docker.sock 
+dockerindocker mluukkai/express_app avsword/shell
