@@ -5,6 +5,3 @@ CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS        
 
 $ docker images
 REPOSITORY               TAG       IMAGE ID       CREATED         SIZE
-nginx                    latest    904b8cb13b93   3 days ago      142MB
-docker/getting-started   latest    3e4394f6b72f   2 months ago    47MB
-hello-world              latest    feb5d9fea6a5   17 months ago   13.3kB
